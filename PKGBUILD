@@ -8,12 +8,14 @@
 # - the xwidgets is enabled (you can surf the Internet via 
 #   a modern browser(webkit) in Emacs!).
 # - link-time optimization is enabled by default.
-# - use the fastest linker "mold".
+# - use the fastest linker "mold", for linking emacs itself and its
+#   native-compilation packages.
 # - enalbe JIT and AOT compilation of emacs-lisp, which
 #   means built-in packages and your own packages are 
 #   native compiled by default.
 # - experiment lsp-mode's json-rpc patch: https://github.com/emacs-lsp/emacs.
 #   Disabled for now because it is still buggy.
+# - enable emacs's tree-sitter integration by default.
 ################################################################################
 
 ################################################################################
@@ -94,6 +96,8 @@ XWIDGETS="YES"    # Use GTK+ widgets pulled from webkit2gtk. Usable.
 PGTK="YES"        # Make Emacs GUI use pure GTK to support Wayland.
                   # Wayland is awesome!
 
+TREE_SITTER="YES" # Use emacs's tree-sitter integration for syntax highlighting.
+
 DOCS_HTML=        # Generate and install html documentation.
                
 DOCS_PDF=         # Generate and install pdf documentation.
@@ -107,8 +111,8 @@ if [[ $CLI == "YES" ]] ; then
 else
 pkgname="emacs-pgtk-git"
 fi
-pkgver=30.0.50.166373
-pkgrel=6
+pkgver=30.0.50.166640
+pkgrel=1
 pkgdesc="GNU Emacs. Development branch, with PGTK enabled."
 arch=('x86_64')
 url="http://www.gnu.org/software/emacs/"
@@ -194,6 +198,10 @@ elif [[ $GTK3 == "YES" ]]; then
 elif [[ $PGTK == "YES" ]]; then
   depends+=( 'gtk3' );
   makedepends+=( 'xorgproto' 'libxi' );
+fi
+
+if [[ $TREE_SITTER == "YES" ]]; then
+  depends+=( 'tree-sitter' );
 fi
 
 if [[ ! $NOX == "YES" ]] && [[ ! $CLI == "YES" ]]; then

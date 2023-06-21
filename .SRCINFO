@@ -1,7 +1,7 @@
 pkgbase = emacs-pgtk-git
 	pkgdesc = GNU Emacs. Development branch, with PGTK enabled.
-	pkgver = 30.0.50.166373
-	pkgrel = 6
+	pkgver = 30.0.50.166640
+	pkgrel = 1
 	url = http://www.gnu.org/software/emacs/
 	install = emacs-git.install
 	arch = x86_64
@@ -17,6 +17,7 @@ pkgbase = emacs-pgtk-git
 	depends = harfbuzz
 	depends = libgccjit
 	depends = gtk3
+	depends = tree-sitter
 	depends = libjpeg-turbo
 	depends = libpng
 	depends = giflib
