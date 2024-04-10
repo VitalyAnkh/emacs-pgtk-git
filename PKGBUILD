@@ -53,6 +53,8 @@ MOLD="YES"        # Use the mold linker.
                   # This is the default linker.
                   # Notice that it will always be used.
 
+SCCACHE="YES"     # Use sccache to cache build artifacts.
+
 JIT="YES"         # Enable native just-in-time compilation. Use libgccjit,
                   # which is in testing repo for now.
                   #
@@ -111,7 +113,7 @@ if [[ $CLI == "YES" ]] ; then
 else
 pkgname="emacs-pgtk-git"
 fi
-pkgver=30.0.50.166640
+pkgver=30.0.50.171650
 pkgrel=1
 pkgdesc="GNU Emacs. Development branch, with PGTK enabled."
 arch=('x86_64')
@@ -147,6 +149,10 @@ elif [[ $GOLD == "YES" && $CLANG == "YES" ]]; then
   exit 1;
 fi
 
+if [[ $SCCACHE == "YES" ]]; then
+  makedepends+=( 'sccache' )
+fi
+
 if [[ $MOLD == "YES" && ! $CLANG == "YES" ]]; then
   # Make sure mold is available in /usr/bin/mold, or
   # you could specify another path to mold.
@@ -157,22 +163,40 @@ if [[ $MOLD == "YES" && ! $CLANG == "YES" ]]; then
 fi
 
 if [[ $CLANG == "YES" ]]; then
-  export CC="/usr/bin/clang" ;
-  export CXX="/usr/bin/clang++" ;
-  export CPP="/usr/bin/clang -E" ;
-  export AR="/usr/bin/llvm-ar" ;
-  export AS="/usr/bin/llvm-as" ;
+  if [[ $SCCACHE == "YES" ]]; then
+  export CC="sccache clang" ;
+  export CXX="sccache clang++" ;
+  export CPP="sccache clang -E" ;
+  export AR="llvm-ar" ;
+  export AS="llvm-as" ;
   makedepends+=( 'clang' 'llvm') ;
+  else
+  export CC="clang" ;
+  export CXX="clang++" ;
+  export CPP="clang -E" ;
+  export AR="llvm-ar" ;
+  export AS="llvm-as" ;
+  makedepends+=( 'clang' 'llvm') ;
+  fi
   if [[ ! $MOLD == "YES" ]]; then
   makedepends+=( 'mold' )
-  export LD="/usr/bin/lld" ;
+  export LD="lld" ;
   export CCFLAGS+=' -fuse-ld=lld' ;
   export CXXFLAGS+=' -fuse-ld=lld' ;
   export CFLAGS+=" --ld-path=/usr/bin/mold";
   export CXXFLAGS+=" --ld-path=/usr/bin/mold";
   else
   makedepends+=( 'lld' )
-  export LD="/usr/bin/lld" ;
+  export LD="lld" ;
+  fi
+else
+  if [[ $SCCACHE == "YES" ]]; then
+  export CC="sccache gcc" ;
+  export CXX="sccache g++" ;
+  else
+  export CC="gcc" ;
+  export CXX="g++" ;
+  makedepends+=( 'clang' 'llvm') ;
   fi
 fi
 

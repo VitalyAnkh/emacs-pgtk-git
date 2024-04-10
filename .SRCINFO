@@ -1,6 +1,6 @@
 pkgbase = emacs-pgtk-git
 	pkgdesc = GNU Emacs. Development branch, with PGTK enabled.
-	pkgver = 30.0.50.166640
+	pkgver = 30.0.50.169061
 	pkgrel = 1
 	url = http://www.gnu.org/software/emacs/
 	install = emacs-git.install
@@ -31,7 +31,7 @@ pkgbase = emacs-pgtk-git
 	conflicts = emacs
 	replaces = emacs
 	options = !strip
-	source = emacs-git::git+https://git.savannah.gnu.org/git/emacs.git
+	source = emacs-git::git+https://git.savannah.gnu.org/git/emacs.git#commit=f7fd21b06865d20a16c11e20776e843db24d4b14
 	source = json-rpc-lsp-mode.patch
 	b2sums = SKIP
 	b2sums = SKIP
