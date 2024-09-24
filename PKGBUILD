@@ -7,6 +7,8 @@
 # - the pure GTK3 rendering backend is enabled.
 # - the xwidgets is enabled (you can surf the Internet via 
 #   a modern browser(webkit) in Emacs!).
+#   Temporarily disabled due to incompatibility with WebKit2GTK versions above
+#   2.41.
 # - link-time optimization is enabled by default.
 # - use the fastest linker "mold", for linking emacs itself and its
 #   native-compilation packages.
@@ -114,7 +116,7 @@ else
 pkgname="emacs-pgtk-git"
 fi
 pkgver=30.0.50.171650
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU Emacs. Development branch, with PGTK enabled."
 arch=('x86_64')
 url="http://www.gnu.org/software/emacs/"
