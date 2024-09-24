@@ -92,7 +92,7 @@ ALSA="YES"        # Linux sound support.
 
 NOCAIRO=          # Disable cairo here.
                
-XWIDGETS="YES"    # Use GTK+ widgets pulled from webkit2gtk. Usable.
+XWIDGETS=         # Use GTK+ widgets pulled from webkit2gtk. Usable.
                   # Thanks to Po Lu, xwidgets supports pgtk now!
                
 PGTK="YES"        # Make Emacs GUI use pure GTK to support Wayland.
